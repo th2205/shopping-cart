@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Menu from './Menu';
 
 interface Menu {
   name: string;
@@ -17,11 +18,7 @@ export default function Home({ menus }: HomeProps) {
     <ServiceMenuContainer>
       <Title>서비스 메뉴</Title>
       {menus.map((menu) => (
-        <div>
-          <span>{menu.name}</span>
-          <span>{menu.price}</span>
-          <input type="checkbox" />
-        </div>
+        <Menu key={menu.id} name={menu.name} price={menu.price} id={menu.id} />
       ))}
     </ServiceMenuContainer>
   );
