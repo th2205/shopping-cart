@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
   return (
     <HeaderContainer>
       <Item>임태현</Item>
       <Item>
-        <HomeButton>Home</HomeButton>
-        <CartButton>장바구니</CartButton>
+        <Link to="/">
+          <HomeButton>Home</HomeButton>
+        </Link>
+        <Link to="/cart">
+          <CartButton>장바구니</CartButton>
+        </Link>
       </Item>
     </HeaderContainer>
   );
