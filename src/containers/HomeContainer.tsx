@@ -1,57 +1,25 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../reducers';
+import { getService, ServiceByIdTypes } from '../reducers/services';
 import Home from '../components/Home';
 
-interface mockTypes {
-  [key: string]: {
-    id?: string;
-    count: number;
-    name: string;
-    price: number;
-  };
+interface ServiceState {
+  serviceById: ServiceByIdTypes;
+  allServiceIds: string[];
+  loading: boolean;
 }
 
-const mock: mockTypes = {
-  i_1: {
-    count: 1,
-    name: '여성컷',
-    price: 35000
-  },
-  i_2: {
-    count: 1,
-    name: '남성컷',
-    price: 30000
-  },
-  i_3: {
-    count: 1,
-    name: '드라이',
-    price: 30000
-  },
-  i_4: {
-    count: 1,
-    name: '기본펌',
-    price: 100000
-  },
-  i_5: {
-    count: 1,
-    name: '염색',
-    price: 60000
-  },
-  i_6: {
-    count: 1,
-    name: '부분염색',
-    price: 25000
-  }
-};
-
 export default function HomeContainer() {
-  const menusById = Object.entries(mock).map((element) => {
-    const [id, content] = element;
+  const { serviceById, allServiceIds, loading }: ServiceState = useSelector(
+    (state: RootState) => state.services
+  );
+  const dispatch = useDispatch();
+  const menus = allServiceIds.map((id: string) => serviceById[id]);
 
-    content.id = id;
+  useEffect(() => {
+    if (!allServiceIds.length) getService(dispatch)();
+  }, [allServiceIds, dispatch]);
 
-    return content;
-  });
-  const allIds = Object.keys(mock);
-  const menus = allIds.map((id) => mock[id]);
-  return <Home menus={menus} />;
+  return <>{loading ? <div>Loading</div> : <Home menus={menus} />}</>;
 }

@@ -8,8 +8,6 @@ if (process.env.NODE_ENV !== 'production') {
   middleware.push(createLogger());
 }
 
-// export default createStore(reducer, applyMiddleware(...middleware));
-
 export default function configureStore() {
   const store = createStore(reducer, applyMiddleware(...middleware));
 

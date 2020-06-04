@@ -8,7 +8,7 @@ export default function Header() {
       <Item>임태현</Item>
       <Item>
         <Link to="/">
-          <HomeButton>Home</HomeButton>
+          <HomeButton>시술</HomeButton>
         </Link>
         <Link to="/cart">
           <CartButton>장바구니</CartButton>
