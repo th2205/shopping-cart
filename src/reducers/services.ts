@@ -19,11 +19,21 @@ export interface ServiceByIdTypes {
   };
 }
 
+export interface DiscountByIdTypes {
+  [key: string]: {
+    id: string;
+    name: string;
+    rate: number;
+    checked: boolean;
+  };
+}
+
 export const GET_SERVICE_REQUEST = 'GET_SERVICE_REQUEST';
 export const GET_SERVICE_SUCCESS = 'GET_SERVICE_SUCCESS';
 export const GET_SERVICE_FAILURE = 'GET_SERVICE_FAILURE';
 
-export const TOGGLE_CHECKBOX = 'TOGGLE_CHECKBOX';
+export const TOGGLE_SERVICE_CHECKBOX = 'TOGGLE_SERVICE_CHECKBOX';
+export const TOGGLE_DISCOUNT_CHECKBOX = 'TOGGLE_DISCOUNT_CHECKBOX';
 
 export const getService = (dispatch: any) => async () => {
   dispatch({ type: GET_SERVICE_REQUEST });
@@ -37,8 +47,13 @@ export const getService = (dispatch: any) => async () => {
   }
 };
 
-export const toggleCheckbox = (id: string) => ({
-  type: TOGGLE_CHECKBOX,
+export const toggleServiceCheckbox = (id: string) => ({
+  type: TOGGLE_SERVICE_CHECKBOX,
+  data: id
+});
+
+export const toggleDiscountCheckbox = (id: string) => ({
+  type: TOGGLE_DISCOUNT_CHECKBOX,
   data: id
 });
 
@@ -81,6 +96,7 @@ export default function service(
           const [id, discount] = cur;
 
           discount.id = id;
+          discount.checked = false;
           acc[id] = discount;
 
           return acc;
@@ -93,15 +109,26 @@ export default function service(
         ...state,
         loading: false
       };
-    case TOGGLE_CHECKBOX:
+    case TOGGLE_SERVICE_CHECKBOX:
       const newServiceById: any = { ...state.serviceById };
-      const id = action.data;
+      const serviceId = action.data;
 
-      newServiceById[id].checked = !newServiceById[id].checked;
+      newServiceById[serviceId].checked = !newServiceById[serviceId].checked;
 
       return {
         ...state,
         serviceById: newServiceById
+      };
+    case TOGGLE_DISCOUNT_CHECKBOX:
+      const newDiscountById: any = { ...state.discountById };
+      const discountId = action.data;
+
+      newDiscountById[discountId].checked = !newDiscountById[discountId]
+        .checked;
+
+      return {
+        ...state,
+        discountById: newDiscountById
       };
     default:
       return state;

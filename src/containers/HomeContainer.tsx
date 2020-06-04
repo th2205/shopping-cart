@@ -4,9 +4,9 @@ import { RootState } from '../reducers';
 import {
   getService,
   ServiceByIdTypes,
-  toggleCheckbox
+  toggleServiceCheckbox
 } from '../reducers/services';
-import { addToCart, removeFromCart } from '../reducers/cart';
+import { addService, removeService } from '../reducers/cart';
 import MenuList from '../components/MenuList';
 
 interface State {
@@ -24,12 +24,12 @@ export default function HomeContainer() {
 
   const onClickCheckbox = (id: string, checked: boolean) => {
     if (!checked) {
-      dispatch(addToCart(serviceById[id]));
+      dispatch(addService(serviceById[id]));
     } else {
-      dispatch(removeFromCart(id));
+      dispatch(removeService(id));
     }
 
-    dispatch(toggleCheckbox(id));
+    dispatch(toggleServiceCheckbox(id));
   };
 
   useEffect(() => {

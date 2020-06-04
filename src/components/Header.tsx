@@ -10,6 +10,9 @@ export default function Header() {
         <Link to="/">
           <HomeButton>시술</HomeButton>
         </Link>
+        <Link to="/discount">
+          <DiscountButton>할인</DiscountButton>
+        </Link>
         <Link to="/cart">
           <CartButton>장바구니</CartButton>
         </Link>
@@ -49,6 +52,19 @@ const CartButton = styled.button`
 `;
 
 const HomeButton = styled.button`
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 0;
+  outline: none;
+  background-color: rgb(197, 210, 221);
+  color: #ffffff;
+  cursor: pointer;
+  margin-right: 10px;
+`;
+
+const DiscountButton = styled.button`
   width: 100px;
   height: 30px;
   border-radius: 5px;
