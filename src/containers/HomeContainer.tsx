@@ -7,7 +7,7 @@ import {
   toggleCheckbox
 } from '../reducers/services';
 import { addToCart, removeFromCart } from '../reducers/cart';
-import Home from '../components/Home';
+import MenuList from '../components/MenuList';
 
 interface State {
   serviceById: ServiceByIdTypes;
@@ -41,7 +41,7 @@ export default function HomeContainer() {
       {loading ? (
         <div>Loading</div>
       ) : (
-        <Home menus={menus} onClickCheckbox={onClickCheckbox} />
+        <MenuList menus={menus} onClickCheckbox={onClickCheckbox} />
       )}
     </>
   );
