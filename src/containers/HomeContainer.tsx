@@ -4,9 +4,10 @@ import { RootState } from '../reducers';
 import { getService, toggleServiceCheckbox } from '../reducers/services';
 import { addService, removeService } from '../reducers/cart';
 import MenuList from '../components/MenuList';
+import ErrorMessage from '../components/ErrorMessage';
 
 export default function HomeContainer() {
-  const { serviceById, allServiceIds, loading } = useSelector(
+  const { serviceById, allServiceIds, loading, errorMessage } = useSelector(
     (state: RootState) => state.services
   );
   const dispatch = useDispatch();
@@ -25,6 +26,10 @@ export default function HomeContainer() {
   useEffect(() => {
     if (!allServiceIds.length) getService(dispatch)();
   }, [allServiceIds, dispatch]);
+
+  if (errorMessage) {
+    return <ErrorMessage errorMessage={errorMessage} />;
+  }
 
   return (
     <>

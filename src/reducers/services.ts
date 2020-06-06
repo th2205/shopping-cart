@@ -7,6 +7,7 @@ export interface ServiceState {
   allDiscountIds: string[];
   currency_code: string;
   loading: boolean;
+  errorMessage: string;
 }
 
 export interface ServiceByIdTypes {
@@ -64,7 +65,8 @@ export const initialState: ServiceState = {
   discountById: {},
   allDiscountIds: [],
   currency_code: '',
-  loading: false
+  loading: false,
+  errorMessage: ''
 };
 
 export default function service(
@@ -110,7 +112,8 @@ export default function service(
     case GET_SERVICE_FAILURE:
       return {
         ...state,
-        loading: false
+        loading: false,
+        errorMessage: '잠시후 다시 시도해주세요'
       };
     case TOGGLE_SERVICE_CHECKBOX:
       const newServiceById: any = { ...state.serviceById };
