@@ -21,12 +21,13 @@ export default function ServiceCart({
 
     onChangeQuantity(id, value);
   };
+  const totalPrice = count * price;
 
   return (
     <ServiceCartContainer>
       <ServiceCartInfo>
         <Name>{name}</Name>
-        <Price>{commaNumber(price)}원</Price>
+        <Price>{commaNumber(totalPrice)}</Price>
       </ServiceCartInfo>
       <select onChange={selectCheckbox} defaultValue={count}>
         <option value="1">1</option>

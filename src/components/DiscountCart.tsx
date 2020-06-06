@@ -39,7 +39,7 @@ export default function DiscountCart({
           </Item>
         ))}
         <Rate>
-          -{`${commaNumber(totalDiscount)}원 (${Math.round(rate * 100)}%)`}
+          -{`${commaNumber(totalDiscount)} (${Math.round(rate * 100)}%)`}
         </Rate>
       </ServiceCartInfo>
       <select onChange={selectService}>

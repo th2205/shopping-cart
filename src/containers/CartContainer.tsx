@@ -14,14 +14,17 @@ import {
   toggleServiceCheckbox,
   toggleDiscountCheckbox
 } from '../reducers/services';
+import { getExchangeRate } from '../utils/api';
 import Cart from '../components/Cart';
 
 export default function CartContainer() {
-  const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [totalPrice, setTotalPrice] = useState(0);
   const { serviceCart, discountCart } = useSelector(
     (state: RootState) => state.cart
   );
-  const { serviceById } = useSelector((state: RootState) => state.services);
+  const { serviceById, currencyCode } = useSelector(
+    (state: RootState) => state.services
+  );
   const dispatch = useDispatch();
 
   const onChangeQuantity = (id: string, quantity: number) => {
@@ -51,25 +54,37 @@ export default function CartContainer() {
   }, [dispatch, serviceById]);
 
   useEffect(() => {
-    setTotalPrice(0);
     if (serviceCart.length) {
-      const totalPrice = serviceCart.reduce((acc: number, cur: ServiceData) => {
-        const quantity = cur.count;
-        const price = cur.price;
+      const getTotalPrice = async () => {
+        const exchangeRate: number = await getExchangeRate();
+        const totalPrice = serviceCart.reduce(
+          (acc: number, cur: ServiceData) => {
+            const quantity = cur.count;
+            const price = cur.price;
 
-        return acc + quantity * price;
-      }, 0);
+            return acc + quantity * price;
+          },
+          0
+        );
+        const totalDiscount = discountCart.reduce(
+          (acc: number, cur: DiscountData) => {
+            return acc + cur.totalDiscount;
+          },
+          0
+        );
 
-      const totalDiscount = discountCart.reduce(
-        (acc: number, cur: DiscountData) => {
-          return acc + cur.totalDiscount;
-        },
-        0
-      );
+        if (currencyCode === 'KRW') {
+          setTotalPrice(totalPrice - totalDiscount);
+        } else {
+          const USDPrice = (totalPrice - totalDiscount) / exchangeRate;
 
-      setTotalPrice(totalPrice - totalDiscount);
+          setTotalPrice(Math.floor(USDPrice * 100) / 100);
+        }
+      };
+
+      getTotalPrice();
     }
-  }, [serviceCart, discountCart]);
+  }, [serviceCart, discountCart, currencyCode]);
 
   return (
     <Cart
@@ -77,6 +92,7 @@ export default function CartContainer() {
       discountCart={discountCart}
       totalPrice={totalPrice}
       serviceById={serviceById}
+      currencyCode={currencyCode}
       onChangeQuantity={onChangeQuantity}
       removeCartService={removeCartService}
       removeCartDiscount={removeCartDiscount}

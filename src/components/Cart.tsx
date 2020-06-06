@@ -9,6 +9,7 @@ import { commaNumber } from '../utils/helper';
 interface CartProps extends CartState {
   totalPrice: number;
   serviceById: ServiceByIdTypes;
+  currencyCode: string;
   onChangeQuantity: (id: string, quantity: number) => void;
   removeCartService: (id: string) => void;
   removeCartDiscount: (id: string) => void;
@@ -20,6 +21,7 @@ export default function Cart({
   discountCart,
   totalPrice,
   serviceById,
+  currencyCode,
   onChangeQuantity,
   removeCartService,
   removeCartDiscount,
@@ -71,7 +73,7 @@ export default function Cart({
       )}
       <TotlaPriceContainer>
         <div>합계</div>
-        <div>{commaNumber(totalPrice)}원</div>
+        <div>{commaNumber(totalPrice, currencyCode)}</div>
       </TotlaPriceContainer>
     </CartContainer>
   );

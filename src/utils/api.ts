@@ -7,3 +7,12 @@ export async function fetchService() {
 
   return response;
 }
+
+export async function getExchangeRate() {
+  const response = await axios.get(
+    'https://api.exchangeratesapi.io/latest?base=USD'
+  );
+  const exchangeRate = response.data.rates.KRW;
+
+  return exchangeRate;
+}

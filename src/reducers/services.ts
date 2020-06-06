@@ -5,7 +5,7 @@ export interface ServiceState {
   allServiceIds: string[];
   discountById: DiscountByIdTypes;
   allDiscountIds: string[];
-  currency_code: string;
+  currencyCode: string;
   loading: boolean;
   errorMessage: string;
 }
@@ -64,7 +64,7 @@ export const initialState: ServiceState = {
   allServiceIds: [],
   discountById: {},
   allDiscountIds: [],
-  currency_code: '',
+  currencyCode: 'KRW',
   loading: false,
   errorMessage: ''
 };
@@ -107,6 +107,7 @@ export default function service(
           return acc;
         }, {}),
         allDiscountIds: Object.keys(discounts),
+        currencyCode: action.data.currency_code,
         loading: false
       };
     case GET_SERVICE_FAILURE:
