@@ -23,7 +23,7 @@ export default function CartContainer() {
   );
   const { serviceById } = useSelector((state: RootState) => state.services);
   const dispatch = useDispatch();
-  console.log(serviceById);
+
   const onChangeQuantity = (id: string, quantity: number) => {
     dispatch(changeQuantity(id, quantity));
     dispatch(calculatePrice(serviceById));
