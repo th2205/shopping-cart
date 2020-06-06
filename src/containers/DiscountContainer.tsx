@@ -25,7 +25,7 @@ export default function HomeContainer() {
   return (
     <>
       {!discounts.length ? (
-        <div>x</div>
+        <div>할인 없음</div>
       ) : (
         <DiscountList
           discounts={discounts}
