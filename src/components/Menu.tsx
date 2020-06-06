@@ -18,9 +18,10 @@ export default function Menu({
     <MenuContainer>
       <MenuInfo>
         <Name>{name}</Name>
-        <Price>{commaNumber(price)}원</Price>
+        <Price>{commaNumber(price)}</Price>
       </MenuInfo>
       <input
+        data-testid="menu-checkbox"
         type="checkbox"
         checked={checked}
         onChange={() => onClickCheckbox(id, checked)}

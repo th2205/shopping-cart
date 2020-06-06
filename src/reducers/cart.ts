@@ -23,6 +23,7 @@ export interface ServiceData {
 }
 
 export interface DiscountData {
+  [x: string]: any;
   checked: boolean;
   rate: number;
   id: string;

@@ -39,7 +39,8 @@ export default function DiscountCart({
           </Item>
         ))}
         <Rate>
-          -{`${commaNumber(totalDiscount)} (${Math.round(rate * 100)}%)`}
+          <span>-{`${commaNumber(totalDiscount)}`}</span>
+          <span>({`${Math.round(rate * 100)}%`})</span>
         </Rate>
       </ServiceCartInfo>
       <select onChange={selectService}>

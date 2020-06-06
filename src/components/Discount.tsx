@@ -23,6 +23,7 @@ export default function Menu({
         <Rate>{Math.round(rate * 100)}%</Rate>
       </DiscountInfo>
       <input
+        data-testid="discount-checkbox"
         type="checkbox"
         checked={checked}
         onChange={() => onClickDiscountcheckbox(id, checked)}
