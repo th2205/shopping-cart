@@ -29,14 +29,14 @@ export interface DiscountByIdTypes {
   };
 }
 
-export const GET_SERVICE_REQUEST = 'GET_SERVICE_REQUEST';
-export const GET_SERVICE_SUCCESS = 'GET_SERVICE_SUCCESS';
-export const GET_SERVICE_FAILURE = 'GET_SERVICE_FAILURE';
+export const GET_SERVICE_REQUEST = 'GET_SERVICE_REQUEST' as const;
+export const GET_SERVICE_SUCCESS = 'GET_SERVICE_SUCCESS' as const;
+export const GET_SERVICE_FAILURE = 'GET_SERVICE_FAILURE' as const;
 
-export const TOGGLE_SERVICE_CHECKBOX = 'TOGGLE_SERVICE_CHECKBOX';
-export const TOGGLE_DISCOUNT_CHECKBOX = 'TOGGLE_DISCOUNT_CHECKBOX';
+export const TOGGLE_SERVICE_CHECKBOX = 'TOGGLE_SERVICE_CHECKBOX' as const;
+export const TOGGLE_DISCOUNT_CHECKBOX = 'TOGGLE_DISCOUNT_CHECKBOX' as const;
 
-export const getService = (dispatch: any) => async () => {
+export const getService = (dispatch: (action: object) => void) => async () => {
   dispatch({ type: GET_SERVICE_REQUEST });
 
   try {

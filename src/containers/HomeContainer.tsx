@@ -1,22 +1,12 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
-import {
-  getService,
-  ServiceByIdTypes,
-  toggleServiceCheckbox
-} from '../reducers/services';
+import { getService, toggleServiceCheckbox } from '../reducers/services';
 import { addService, removeService } from '../reducers/cart';
 import MenuList from '../components/MenuList';
 
-interface State {
-  serviceById: ServiceByIdTypes;
-  allServiceIds: string[];
-  loading: boolean;
-}
-
 export default function HomeContainer() {
-  const { serviceById, allServiceIds, loading }: State = useSelector(
+  const { serviceById, allServiceIds, loading } = useSelector(
     (state: RootState) => state.services
   );
   const dispatch = useDispatch();

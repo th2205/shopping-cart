@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+
 interface DiscountProps {
   name: string;
   rate: number;

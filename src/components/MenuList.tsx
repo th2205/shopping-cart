@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Menu from './Menu';
 
-interface Menu {
+export interface MenuTypes {
   name: string;
   price: number;
   id: string;
@@ -10,7 +10,7 @@ interface Menu {
 }
 
 interface MenuProps {
-  menus: Array<Menu>;
+  menus: Array<MenuTypes>;
   onClickCheckbox: (id: string, checked: boolean) => void;
 }
 
@@ -18,7 +18,7 @@ export default function MenuList({ menus, onClickCheckbox }: MenuProps) {
   return (
     <ServiceMenuContainer>
       <Title>서비스 메뉴</Title>
-      {menus.map((menu: Menu) => (
+      {menus.map((menu) => (
         <Menu
           key={menu.id}
           name={menu.name}

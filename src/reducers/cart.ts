@@ -53,7 +53,7 @@ export const removeService = (id: string) => ({
 
 export const addDiscount = (
   discountData: DiscountData,
-  serviceData: ServiceData,
+  serviceData: any,
   serviceById: ServiceByIdTypes
 ) => ({
   type: ADD_DISCOUNT,

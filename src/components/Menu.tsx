@@ -1,11 +1,8 @@
 import React from 'react';
+import { MenuTypes } from './MenuList';
 import styled from 'styled-components';
 
-interface MenuProps {
-  name: string;
-  price: number;
-  id: string;
-  checked: boolean;
+interface MenuProps extends MenuTypes {
   onClickCheckbox: (id: string, checked: boolean) => void;
 }
 

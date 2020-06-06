@@ -1,18 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Discount from '../components/Discount';
-
-interface Discount {
-  name: string;
-  rate: number;
-  id: string;
-  checked: boolean;
-}
+import { DiscountData } from '../reducers/cart';
 
 interface DiscountProps {
-  discounts: Array<Discount>;
+  discounts: Array<DiscountData>;
   onClickDiscountcheckbox: (id: string, checked: boolean) => void;
 }
+
 export default function DiscountList({
   discounts,
   onClickDiscountcheckbox
