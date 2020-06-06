@@ -1,6 +1,7 @@
 import React from 'react';
 import { MenuTypes } from './MenuList';
 import styled from 'styled-components';
+import { commaNumber } from '../utils/helper';
 
 interface MenuProps extends MenuTypes {
   onClickCheckbox: (id: string, checked: boolean) => void;
@@ -17,7 +18,7 @@ export default function Menu({
     <MenuContainer>
       <MenuInfo>
         <Name>{name}</Name>
-        <Price>{price}</Price>
+        <Price>{commaNumber(price)}원</Price>
       </MenuInfo>
       <input
         type="checkbox"

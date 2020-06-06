@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { DiscountData, ServiceData } from '../reducers/cart';
 import { ServiceByIdTypes } from '../reducers/services';
+import { commaNumber } from '../utils/helper';
 
 interface DiscountCartProps extends DiscountData {
   serviceCart: Array<ServiceData>;
@@ -37,7 +38,9 @@ export default function DiscountCart({
             {serviceById[serviceId].name}x{serviceById[serviceId].count}
           </Item>
         ))}
-        <Rate>{`${-totalDiscount} (${Math.round(rate * 100)}%)`}</Rate>
+        <Rate>
+          -{`${commaNumber(totalDiscount)}원 (${Math.round(rate * 100)}%)`}
+        </Rate>
       </ServiceCartInfo>
       <select onChange={selectService}>
         <option value="all">수정</option>

@@ -4,6 +4,7 @@ import { ServiceByIdTypes } from '../reducers/services';
 import styled from 'styled-components';
 import ServiceCart from './ServiceCart';
 import DiscountCart from './DiscountCart';
+import { commaNumber } from '../utils/helper';
 
 interface CartProps extends CartState {
   totalPrice: number;
@@ -58,7 +59,7 @@ export default function Cart({
       ))}
       <TotlaPriceContainer>
         <div>합계</div>
-        <div>{totalPrice}</div>
+        <div>{commaNumber(totalPrice)}원</div>
       </TotlaPriceContainer>
     </CartContainer>
   );

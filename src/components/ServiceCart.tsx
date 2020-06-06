@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ServiceData } from '../reducers/cart';
+import { commaNumber } from '../utils/helper';
 
 interface ServiceCartProps extends ServiceData {
   onChangeQuantity: (id: string, quantity: number) => void;
@@ -25,7 +26,7 @@ export default function ServiceCart({
     <ServiceCartContainer>
       <ServiceCartInfo>
         <Name>{name}</Name>
-        <Price>{price}</Price>
+        <Price>{commaNumber(price)}원</Price>
       </ServiceCartInfo>
       <select onChange={selectCheckbox} defaultValue={count}>
         <option value="1">1</option>
