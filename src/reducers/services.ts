@@ -3,7 +3,7 @@ import { fetchService } from '../utils/api';
 export interface ServiceState {
   serviceById: ServiceByIdTypes;
   allServiceIds: string[];
-  discountById: {};
+  discountById: DiscountByIdTypes;
   allDiscountIds: string[];
   currency_code: string;
   loading: boolean;
@@ -25,6 +25,7 @@ export interface DiscountByIdTypes {
     name: string;
     rate: number;
     checked: boolean;
+    targets: string[];
   };
 }
 
@@ -57,7 +58,7 @@ export const toggleDiscountCheckbox = (id: string) => ({
   data: id
 });
 
-const initialState: ServiceState = {
+export const initialState: ServiceState = {
   serviceById: {},
   allServiceIds: [],
   discountById: {},
@@ -97,6 +98,8 @@ export default function service(
 
           discount.id = id;
           discount.checked = false;
+          discount.targets = [];
+          discount.totalDiscount = 0;
           acc[id] = discount;
 
           return acc;
