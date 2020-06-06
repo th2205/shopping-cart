@@ -50,7 +50,7 @@ export default function DiscountCart({
           </option>
         ))}
       </select>
-      <button onClick={() => removeCartDiscount(id)}>삭제</button>
+      <RemoveButton onClick={() => removeCartDiscount(id)}>삭제</RemoveButton>
     </DiscountCartContainer>
   );
 }
@@ -84,4 +84,16 @@ const Rate = styled.p`
 const Item = styled.span`
   margin-right: 4px;
   font-size: 12px;
+`;
+
+const RemoveButton = styled.button`
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 0;
+  outline: none;
+  background-color: #d92027;
+  color: #ffffff;
+  cursor: pointer;
 `;

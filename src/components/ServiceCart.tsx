@@ -35,7 +35,7 @@ export default function ServiceCart({
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <button onClick={() => removeCartService(id)}>삭제</button>
+      <RemoveButton onClick={() => removeCartService(id)}>삭제</RemoveButton>
     </ServiceCartContainer>
   );
 }
@@ -64,4 +64,16 @@ const Name = styled.p`
 const Price = styled.p`
   margin: 0;
   padding: 0;
+`;
+
+const RemoveButton = styled.button`
+  width: 100px;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  border: 0;
+  outline: none;
+  background-color: #d92027;
+  color: #ffffff;
+  cursor: pointer;
 `;

@@ -29,34 +29,46 @@ export default function Cart({
     <CartContainer>
       <Title>장바구니</Title>
       <h4>시술</h4>
-      {serviceCart.map((service) => (
-        <ServiceCart
-          key={service.id}
-          count={service.count}
-          name={service.name}
-          price={service.price}
-          id={service.id}
-          checked={service.checked}
-          onChangeQuantity={onChangeQuantity}
-          removeCartService={removeCartService}
-        />
-      ))}
+      {serviceCart.length ? (
+        <div>
+          {serviceCart.map((service) => (
+            <ServiceCart
+              key={service.id}
+              count={service.count}
+              name={service.name}
+              price={service.price}
+              id={service.id}
+              checked={service.checked}
+              onChangeQuantity={onChangeQuantity}
+              removeCartService={removeCartService}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>서비스를 선택해주세요</div>
+      )}
       <h4>할인</h4>
-      {discountCart.map((discount) => (
-        <DiscountCart
-          key={discount.id}
-          name={discount.name}
-          rate={discount.rate}
-          id={discount.id}
-          checked={discount.checked}
-          targets={discount.targets}
-          totalDiscount={discount.totalDiscount}
-          serviceCart={serviceCart}
-          serviceById={serviceById}
-          removeCartDiscount={removeCartDiscount}
-          applyDiscountToCart={applyDiscountToCart}
-        />
-      ))}
+      {discountCart.length ? (
+        <div>
+          {discountCart.map((discount) => (
+            <DiscountCart
+              key={discount.id}
+              name={discount.name}
+              rate={discount.rate}
+              id={discount.id}
+              checked={discount.checked}
+              targets={discount.targets}
+              totalDiscount={discount.totalDiscount}
+              serviceCart={serviceCart}
+              serviceById={serviceById}
+              removeCartDiscount={removeCartDiscount}
+              applyDiscountToCart={applyDiscountToCart}
+            />
+          ))}
+        </div>
+      ) : (
+        <div>할인을 선택해주세요</div>
+      )}
       <TotlaPriceContainer>
         <div>합계</div>
         <div>{commaNumber(totalPrice)}원</div>
@@ -87,4 +99,5 @@ const TotlaPriceContainer = styled.div`
   align-items: center;
   margin: 40px auto 0 auto;
   padding: 20px 0;
+  font-size: 25px;
 `;
