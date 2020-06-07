@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function fetchService() {
   const response = await axios.get(
-    process.env['REACT_APP_API_ADDRESS'] as string
+    'https://us-central1-colavolab.cloudfunctions.net/requestAssignmentCalculatorData'
   );
 
   return response;
