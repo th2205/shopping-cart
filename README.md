@@ -1,44 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 콜라보그라운드 UI 개발 과제
 
-## Available Scripts
+# Installation
 
-In the project directory, you can run:
+```
+git clone https://github.com/th2205/colavo-assignment
+cd colavo-assignment
+npm install
+npm start
+```
 
-### `yarn start`
+# Challenges
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### 타입스크립트
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+이번 콜라보그라운드 과제를 통해 처음 타입스크립트를 사용해봤습니다. 처음에는 수많은 타입과 처음 보는 에러, 훨씬 늘어난 코드양을 보면서 개발속도가 느리고 생산성 측면에서 좋지 않다는 느낌을 받았습니다.
 
-### `yarn test`
+하지만 타입스크립트가 조금씩 익숙해지면서 느낀 장점은 에러가 발생했을 때 디버깅이 매우 쉬워진다는 점이었습니다. 자바스크립트에서는 조금만 로직이 복잡해져도 디버깅이 오래 걸렸는데 타입스크립트에서는 타입을 설정하면 함수의 인자, 객체의 속성이 어떤게 있고 컴포넌트의 프랍이 어떤게 있어야 하는지 일부러 찾아볼 필요 없이 쉽게 알 수 있어서 디버깅이 매우 빨라졌음을 느낄 수 있었습니다. 또한 자동완성 기능도 매우 편리했습니다.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+처음 느낌과 달리 타입스크립트를 사용할수록 코드양은 늘어나지만, 오히려 생산성 측면에서는 좋아지고 더 견고한 애플리케이션을 만들 수 있겠다는 느낌을 받았습니다. 이번 과제를 통해 타입스크립트에 대해 좋은 경험을 할 수 있었습니다.
