@@ -6,7 +6,7 @@ interface DiscountProps {
   rate: number;
   id: string;
   checked: boolean;
-  onClickDiscountcheckbox: (id: string, checked: boolean) => void;
+  onCheckboxClick: (id: string, checked: boolean) => void;
 }
 
 export default function Menu({
@@ -14,7 +14,7 @@ export default function Menu({
   rate,
   id,
   checked,
-  onClickDiscountcheckbox
+  onCheckboxClick
 }: DiscountProps) {
   return (
     <DiscountContainer>
@@ -26,7 +26,7 @@ export default function Menu({
         data-testid="discount-checkbox"
         type="checkbox"
         checked={checked}
-        onChange={() => onClickDiscountcheckbox(id, checked)}
+        onChange={() => onCheckboxClick(id, checked)}
       />
     </DiscountContainer>
   );

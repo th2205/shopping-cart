@@ -1,4 +1,5 @@
 import { fetchService } from '../utils/api';
+import { ServiceData, DiscountData, TargetData } from '../reducers/cart';
 
 export interface ServiceState {
   serviceById: ServiceByIdTypes;
@@ -26,7 +27,7 @@ export interface DiscountByIdTypes {
     name: string;
     rate: number;
     checked: boolean;
-    targets: string[];
+    targets: TargetData[];
   };
 }
 
@@ -36,6 +37,9 @@ export const GET_SERVICE_FAILURE = 'GET_SERVICE_FAILURE' as const;
 
 export const TOGGLE_SERVICE_CHECKBOX = 'TOGGLE_SERVICE_CHECKBOX' as const;
 export const TOGGLE_DISCOUNT_CHECKBOX = 'TOGGLE_DISCOUNT_CHECKBOX' as const;
+
+export const CHANGE_SERVICE_CHECKBOX = 'CHANGE_SERVICE_CHECKBOX' as const;
+export const CHANGE_DISCOUNT_CHECKBOX = 'CHANGE_DISCOUNT_CHECKBOX' as const;
 
 export const getService = (dispatch: (action: object) => void) => async () => {
   dispatch({ type: GET_SERVICE_REQUEST });
@@ -57,6 +61,16 @@ export const toggleServiceCheckbox = (id: string) => ({
 export const toggleDiscountCheckbox = (id: string) => ({
   type: TOGGLE_DISCOUNT_CHECKBOX,
   data: id
+});
+
+export const changeServiceCheckbox = (serviceCart: ServiceData) => ({
+  type: CHANGE_SERVICE_CHECKBOX,
+  data: serviceCart
+});
+
+export const changeDiscountCheckbox = (discountCart: DiscountData) => ({
+  type: CHANGE_DISCOUNT_CHECKBOX,
+  data: discountCart
 });
 
 export const initialState: ServiceState = {
@@ -136,6 +150,44 @@ export default function service(
       return {
         ...state,
         discountById: newDiscountById
+      };
+    case CHANGE_SERVICE_CHECKBOX:
+      const serviceCart = action.data;
+      const serviceByIdCopy = { ...state.serviceById };
+
+      for (let key in serviceByIdCopy) {
+        serviceByIdCopy[key].checked = false;
+      }
+
+      serviceCart.forEach((service: ServiceData) => {
+        const id = service.id;
+        for (let key in serviceByIdCopy) {
+          if (id === key) serviceByIdCopy[key].checked = true;
+        }
+      });
+
+      return {
+        ...state,
+        serviceById: serviceByIdCopy
+      };
+    case CHANGE_DISCOUNT_CHECKBOX:
+      const discountCart = action.data;
+      const dicountByIdCopy = { ...state.discountById };
+
+      for (let key in dicountByIdCopy) {
+        dicountByIdCopy[key].checked = false;
+      }
+
+      discountCart.forEach((discount: DiscountData) => {
+        const id = discount.id;
+        for (let key in dicountByIdCopy) {
+          if (id === key) dicountByIdCopy[key].checked = true;
+        }
+      });
+
+      return {
+        ...state,
+        discountById: dicountByIdCopy
       };
     default:
       return state;

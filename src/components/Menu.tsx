@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { MenuTypes } from './MenuList';
 import styled from 'styled-components';
 import { commaNumber } from '../utils/helper';
 
 interface MenuProps extends MenuTypes {
-  onClickCheckbox: (id: string, checked: boolean) => void;
+  currentQuantity: number;
+  setCurrentQuantity: Dispatch<SetStateAction<number>>;
+  onCheckboxClick: (id: string, checked: boolean) => void;
 }
 
 export default function Menu({
@@ -12,19 +14,34 @@ export default function Menu({
   price,
   id,
   checked,
-  onClickCheckbox
+  currentQuantity,
+  setCurrentQuantity,
+  onCheckboxClick
 }: MenuProps) {
+  const selectCheckbox = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = parseInt(e.target.value);
+
+    setCurrentQuantity(value);
+  };
+
   return (
     <MenuContainer>
       <MenuInfo>
         <Name>{name}</Name>
         <Price>{commaNumber(price)}</Price>
       </MenuInfo>
+      <select onChange={selectCheckbox} defaultValue={currentQuantity}>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
       <input
         data-testid="menu-checkbox"
         type="checkbox"
         checked={checked}
-        onChange={() => onClickCheckbox(id, checked)}
+        onChange={() => onCheckboxClick(id, checked)}
       />
     </MenuContainer>
   );

@@ -8,7 +8,8 @@ import {
   calculatePrice,
   applyDiscount,
   ServiceData,
-  DiscountData
+  DiscountData,
+  CartState
 } from '../reducers/cart';
 import {
   toggleServiceCheckbox,
@@ -16,36 +17,53 @@ import {
 } from '../reducers/services';
 import { getExchangeRate } from '../utils/api';
 import Cart from '../components/Cart';
+import DiscountModal from '../components/DiscountModal';
 
 export default function CartContainer() {
   const [totalPrice, setTotalPrice] = useState(0);
-  const { serviceCart, discountCart } = useSelector(
-    (state: RootState) => state.cart
-  );
-  const { serviceById, currencyCode } = useSelector(
+  const [isVisible, setIsVisible] = useState(false);
+  const [discountId, setDiscountId] = useState('');
+
+  const {
+    serviceCart,
+    discountCart,
+    subDiscountCart,
+    subServiceCart
+  }: CartState = useSelector((state: RootState) => state.cart);
+  const { serviceById, currencyCode, discountById } = useSelector(
     (state: RootState) => state.services
   );
   const dispatch = useDispatch();
 
-  const onChangeQuantity = (id: string, quantity: number) => {
+  const handleQuantityChange = (id: string, quantity: number) => {
     dispatch(changeQuantity(id, quantity));
     dispatch(calculatePrice(serviceById));
   };
 
-  const removeCartService = (id: string) => {
+  const handleServiceRemove = (id: string) => {
     dispatch(removeService(id));
     dispatch(toggleServiceCheckbox(id));
     dispatch(calculatePrice(serviceById));
   };
 
-  const removeCartDiscount = (id: string) => {
+  const handleDiscountRemove = (id: string) => {
     dispatch(removeDiscount(id));
     dispatch(toggleDiscountCheckbox(id));
     dispatch(calculatePrice(serviceById));
+    setIsVisible(!isVisible);
   };
 
-  const applyDiscountToCart = (serviceId: string, discountId: string) => {
+  const handleDiscountApply = (serviceId: string, discountId: string) => {
     dispatch(applyDiscount(serviceId, discountId));
+  };
+
+  const handleEditButtonClick = (id: string) => {
+    setIsVisible(!isVisible);
+    setDiscountId(id);
+  };
+
+  const handleOKButtonClick = () => {
+    setIsVisible(!isVisible);
     dispatch(calculatePrice(serviceById));
   };
 
@@ -54,49 +72,57 @@ export default function CartContainer() {
   }, [dispatch, serviceById]);
 
   useEffect(() => {
-    if (serviceCart.length) {
-      const getTotalPrice = async () => {
-        const exchangeRate: number = await getExchangeRate();
-        const totalPrice = serviceCart.reduce(
-          (acc: number, cur: ServiceData) => {
-            const quantity = cur.count;
-            const price = cur.price;
+    const getTotalPrice = async () => {
+      const exchangeRate: number = await getExchangeRate();
+      const totalPrice = serviceCart.reduce((acc: number, cur: ServiceData) => {
+        const quantity = cur.count;
+        const price = cur.price;
 
-            return acc + quantity * price;
-          },
-          0
-        );
-        const totalDiscount = discountCart.reduce(
-          (acc: number, cur: DiscountData) => {
-            return acc + cur.totalDiscount;
-          },
-          0
-        );
+        return acc + quantity * price;
+      }, 0);
+      const totalDiscount = discountCart.reduce(
+        (acc: number, cur: DiscountData) => {
+          return acc + cur.totalDiscount;
+        },
+        0
+      );
 
-        if (currencyCode === 'KRW') {
-          setTotalPrice(totalPrice - totalDiscount);
-        } else {
-          const USDPrice = (totalPrice - totalDiscount) / exchangeRate;
+      if (currencyCode === 'KRW') {
+        setTotalPrice(totalPrice - totalDiscount);
+      } else {
+        const USDPrice = (totalPrice - totalDiscount) / exchangeRate;
 
-          setTotalPrice(Math.floor(USDPrice * 100) / 100);
-        }
-      };
+        setTotalPrice(Math.floor(USDPrice * 100) / 100);
+      }
+    };
 
-      getTotalPrice();
-    }
+    getTotalPrice();
   }, [serviceCart, discountCart, currencyCode]);
 
   return (
-    <Cart
-      serviceCart={serviceCart}
-      discountCart={discountCart}
-      totalPrice={totalPrice}
-      serviceById={serviceById}
-      currencyCode={currencyCode}
-      onChangeQuantity={onChangeQuantity}
-      removeCartService={removeCartService}
-      removeCartDiscount={removeCartDiscount}
-      applyDiscountToCart={applyDiscountToCart}
-    />
+    <>
+      <Cart
+        serviceCart={serviceCart}
+        discountCart={discountCart}
+        subDiscountCart={subDiscountCart}
+        subServiceCart={subServiceCart}
+        totalPrice={totalPrice}
+        serviceById={serviceById}
+        currencyCode={currencyCode}
+        handleQuantityChange={handleQuantityChange}
+        handleServiceRemove={handleServiceRemove}
+        handleEditButtonClick={handleEditButtonClick}
+      />
+      {isVisible && (
+        <DiscountModal
+          serviceById={serviceById}
+          discountId={discountId}
+          discountById={discountById}
+          onDiscountChange={handleDiscountApply}
+          onDeleteButtonClick={handleDiscountRemove}
+          onOKButtonClick={handleOKButtonClick}
+        />
+      )}
+    </>
   );
 }

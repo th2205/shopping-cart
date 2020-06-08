@@ -1,15 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import { DiscountData, ServiceData } from '../reducers/cart';
+import { DiscountData } from '../reducers/cart';
 import { ServiceByIdTypes } from '../reducers/services';
 import { commaNumber } from '../utils/helper';
 
 interface DiscountCartProps extends DiscountData {
-  serviceCart: Array<ServiceData>;
   totalDiscount: number;
   serviceById: ServiceByIdTypes;
-  removeCartDiscount: (id: string) => void;
-  applyDiscountToCart: (serviceId: string, discountId: string) => void;
+  onEditButtonClick: (id: string) => void;
 }
 
 export default function DiscountCart({
@@ -18,40 +16,29 @@ export default function DiscountCart({
   id,
   targets,
   totalDiscount,
-  serviceCart,
   serviceById,
-  removeCartDiscount,
-  applyDiscountToCart
+  onEditButtonClick
 }: DiscountCartProps) {
-  const selectService = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const serviceId = e.target.value;
-    const discountId = id;
-
-    applyDiscountToCart(serviceId, discountId);
-  };
   return (
     <DiscountCartContainer>
-      <ServiceCartInfo>
+      <DiscountCartInfo>
         <Name>{name}</Name>
-        {targets.map((serviceId) => (
-          <Item key={serviceId}>
-            {serviceById[serviceId].name}x{serviceById[serviceId].count}
+        {targets.map((targetObj) => (
+          <Item key={targetObj.id}>
+            {targetObj.checked && (
+              <span>
+                {serviceById[targetObj.id].name}x
+                {serviceById[targetObj.id].count}
+              </span>
+            )}
           </Item>
         ))}
         <Rate>
           <span>-{`${commaNumber(totalDiscount)}`}</span>
           <span>({`${Math.round(rate * 100)}%`})</span>
         </Rate>
-      </ServiceCartInfo>
-      <select onChange={selectService}>
-        <option value="all">수정</option>
-        {serviceCart.map((service) => (
-          <option key={service.id} value={service.id}>
-            {service.name}
-          </option>
-        ))}
-      </select>
-      <RemoveButton onClick={() => removeCartDiscount(id)}>삭제</RemoveButton>
+      </DiscountCartInfo>
+      <EditButton onClick={() => onEditButtonClick(id)}>수정</EditButton>
     </DiscountCartContainer>
   );
 }
@@ -66,7 +53,7 @@ const DiscountCartContainer = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
-const ServiceCartInfo = styled.div`
+const DiscountCartInfo = styled.div`
   padding: 10px;
   width: 50%;
   text-align: left;
@@ -87,14 +74,14 @@ const Item = styled.span`
   font-size: 12px;
 `;
 
-const RemoveButton = styled.button`
+const EditButton = styled.button`
   width: 100px;
   height: 30px;
   border-radius: 5px;
   font-size: 16px;
   border: 0;
   outline: none;
-  background-color: #d92027;
+  background-color: rgb(197, 210, 221);
   color: #ffffff;
   cursor: pointer;
 `;

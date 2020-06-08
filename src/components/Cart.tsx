@@ -10,10 +10,9 @@ interface CartProps extends CartState {
   totalPrice: number;
   serviceById: ServiceByIdTypes;
   currencyCode: string;
-  onChangeQuantity: (id: string, quantity: number) => void;
-  removeCartService: (id: string) => void;
-  removeCartDiscount: (id: string) => void;
-  applyDiscountToCart: (serviceId: string, discountId: string) => void;
+  handleQuantityChange: (id: string, quantity: number) => void;
+  handleServiceRemove: (id: string) => void;
+  handleEditButtonClick: (id: string) => void;
 }
 
 export default function Cart({
@@ -22,10 +21,9 @@ export default function Cart({
   totalPrice,
   serviceById,
   currencyCode,
-  onChangeQuantity,
-  removeCartService,
-  removeCartDiscount,
-  applyDiscountToCart
+  handleQuantityChange,
+  handleServiceRemove,
+  handleEditButtonClick
 }: CartProps) {
   return (
     <CartContainer>
@@ -41,8 +39,8 @@ export default function Cart({
               price={service.price}
               id={service.id}
               checked={service.checked}
-              onChangeQuantity={onChangeQuantity}
-              removeCartService={removeCartService}
+              onSelecBoxClick={handleQuantityChange}
+              onDeleteButtonClick={handleServiceRemove}
             />
           ))}
         </div>
@@ -63,8 +61,7 @@ export default function Cart({
               totalDiscount={discount.totalDiscount}
               serviceCart={serviceCart}
               serviceById={serviceById}
-              removeCartDiscount={removeCartDiscount}
-              applyDiscountToCart={applyDiscountToCart}
+              onEditButtonClick={handleEditButtonClick}
             />
           ))}
         </div>
@@ -87,7 +84,7 @@ const CartContainer = styled.div`
   width: 70%;
   min-height: 20vh;
   padding: 10px;
-  margin: 0 auto;
+  margin: 0 auto 20px auto;
   background-color: #ffffff;
   border: 1px solid rgba(37, 38, 42, 0.2);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;

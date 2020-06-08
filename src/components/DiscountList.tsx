@@ -1,16 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import Discount from '../components/Discount';
 import { DiscountData } from '../reducers/cart';
 
 interface DiscountProps {
   discounts: Array<DiscountData>;
-  onClickDiscountcheckbox: (id: string, checked: boolean) => void;
+  handleDiscountCheckboxClick: (id: string, checked: boolean) => void;
+  onDiscountSelectionComplete: () => void;
 }
 
 export default function DiscountList({
   discounts,
-  onClickDiscountcheckbox
+  handleDiscountCheckboxClick,
+  onDiscountSelectionComplete
 }: DiscountProps) {
   return (
     <DiscountMenuContainer>
@@ -22,9 +25,12 @@ export default function DiscountList({
           rate={discount.rate}
           checked={discount.checked}
           id={discount.id}
-          onClickDiscountcheckbox={onClickDiscountcheckbox}
+          onCheckboxClick={handleDiscountCheckboxClick}
         />
       ))}
+      <Link to="/cart">
+        <NextButton onClick={onDiscountSelectionComplete}>완료</NextButton>
+      </Link>
     </DiscountMenuContainer>
   );
 }
@@ -42,4 +48,15 @@ const DiscountMenuContainer = styled.div`
   border: 1px solid rgba(37, 38, 42, 0.2);
   box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 4px;
   border-radius: 10px;
+`;
+
+const NextButton = styled.button`
+  background-color: rgb(154, 134, 238);
+  color: #ffffff;
+  width: 80%;
+  height: 5vh;
+  border: 0;
+  border-radius: 5px;
+  margin-top: 30px;
+  cursor: pointer;
 `;

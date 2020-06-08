@@ -4,8 +4,8 @@ import { ServiceData } from '../reducers/cart';
 import { commaNumber } from '../utils/helper';
 
 interface ServiceCartProps extends ServiceData {
-  onChangeQuantity: (id: string, quantity: number) => void;
-  removeCartService: (id: string) => void;
+  onSelecBoxClick: (id: string, quantity: number) => void;
+  onDeleteButtonClick: (id: string) => void;
 }
 
 export default function ServiceCart({
@@ -13,13 +13,13 @@ export default function ServiceCart({
   price,
   id,
   count,
-  onChangeQuantity,
-  removeCartService
+  onSelecBoxClick,
+  onDeleteButtonClick
 }: ServiceCartProps) {
   const selectCheckbox = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = parseInt(e.target.value);
 
-    onChangeQuantity(id, value);
+    onSelecBoxClick(id, value);
   };
   const totalPrice = count * price;
 
@@ -36,7 +36,7 @@ export default function ServiceCart({
         <option value="4">4</option>
         <option value="5">5</option>
       </select>
-      <RemoveButton onClick={() => removeCartService(id)}>삭제</RemoveButton>
+      <RemoveButton onClick={() => onDeleteButtonClick(id)}>삭제</RemoveButton>
     </ServiceCartContainer>
   );
 }
