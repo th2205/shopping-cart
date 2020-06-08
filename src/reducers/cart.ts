@@ -1,5 +1,4 @@
 import { ServiceByIdTypes } from './services';
-import _ from 'lodash';
 
 export const ADD_SERVICE = 'ADD_SERVICE' as const;
 export const REMOVE_SERVICE = 'REMOVE_SERVICE' as const;
